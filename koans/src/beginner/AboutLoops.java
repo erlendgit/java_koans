@@ -11,68 +11,68 @@ public class AboutLoops {
 
     @Koan
     public void basicForLoop1() {
-        String s = "";
+        String sequence = "";
         for (int i = 0; i < 5; i++) {
-            s += i + " ";
+            sequence += i + " ";
         }
-        assertEquals(s, __);
+        assertEquals(sequence, "0 1 2 3 4 ");
     }
 
     @Koan
     public void basicForLoop2() {
-        String s = "";
+        String sequence = "";
         for (int i = -5; i < 1; i++) {
-            s += i + " ";
+            sequence += i + " ";
         }
-        assertEquals(s, __);
+        assertEquals(sequence, "-5 -4 -3 -2 -1 0 ");
     }
 
     @Koan
     public void basicForLoop3() {
-        String s = "";
+        String sequence = "";
         for (int i = 5; i > 0; i--) {
-            s += i + " ";
+            sequence += i + " ";
         }
-        assertEquals(s, __);
+        assertEquals(sequence, "5 4 3 2 1 ");
     }
 
     @Koan
     public void basicForLoop4() {
-        String s = "";
+        String sequence = "";
         for (int i = 0; i < 11; i += 2) {
-            s += i + " ";
+            sequence += i + " ";
         }
-        assertEquals(s, __);
+        assertEquals(sequence, "0 2 4 6 8 10 ");
     }
 
     @Koan
     public void basicForLoop5() {
-        String s = "";
+        String sequence = "";
         for (int i = 1; i <= 16; i *= 2) {
-            s += i + " ";
+            sequence += i + " ";
         }
-        assertEquals(s, __);
+        assertEquals(sequence, "1 2 4 8 16 ");
     }
 
     @Koan
     public void basicForLoopWithTwoVariables1() {
-        String s = "";
+        String sequence = "";
         for (int i = 0, j = 10; i < 5 && j > 5; i++, j--) {
-            s += i + " " + j + " ";
+            sequence += i + " " + j + " ";
         }
-        assertEquals(s, __);
+        assertEquals(sequence, "0 10 1 9 2 8 3 7 4 6 ");
     }
 
     @Koan
     public void nestedLoops() {
-        String s = "";
+        String sequence = "";
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                s += "(" + i + ", " + j + ") ";
+                sequence += "(" + i + ", " + j + ") ";
             }
-            s += " - ";
+            sequence += " - ";
         }
-        assertEquals(s, __);
+        assertEquals(sequence, "(0, 0) (0, 1) (0, 2)  - (1, 0) (1, 1) (1, 2)  - (2, 0) (2, 1) (2, 2)  - ");
     }
 
     @Koan
@@ -82,7 +82,7 @@ public class AboutLoops {
         for (int j : is) {
             s += j + " ";
         }
-        assertEquals(s, __);
+        assertEquals(s, "1 2 3 4 ");
     }
 
     @Koan
@@ -91,7 +91,7 @@ public class AboutLoops {
         while (result < 3) {
             result++;
         }
-        assertEquals(result, __);
+        assertEquals(result, 3);
     }
 
     @Koan
@@ -100,7 +100,7 @@ public class AboutLoops {
         do {
             result++;
         } while (false);
-        assertEquals(result, __);
+        assertEquals(result, 1);
     }
 
     @Koan
@@ -113,7 +113,7 @@ public class AboutLoops {
             }
             count++;
         }
-        assertEquals(count, __);
+        assertEquals(count, 1);
     }
 
     @Koan
@@ -127,7 +127,11 @@ public class AboutLoops {
                 count++;
             }
         }
-        assertEquals(count, __);
+        assertEquals(count, 2);
+    }
+
+    public int getLineNumber() {
+        return new Throwable().getStackTrace()[1].getLineNumber();
     }
 
     @Koan
@@ -135,17 +139,25 @@ public class AboutLoops {
         int count = 0;
         outerLabel:
         for (int i = 0; i < 6; i++) {
+            //System.out.println(getLineNumber());
             for (int j = 0; j < 6; j++) {
+                //System.out.println(getLineNumber());
                 count++;
                 if (count > 2) {
+                    //System.out.println(getLineNumber());
                     continue outerLabel;
                 }
+                //System.out.println(getLineNumber());
             }
             count += 10;
+            //System.out.println(getLineNumber());
         }
+        //System.out.println(getLineNumber());
         // What does continue with a label mean?
+        //   EM: 'goto', keep values of target scope variables
         // What gets executed? Where does the program flow continue?
-        assertEquals(count, __);
+        //   EM: right behind the given label.
+        assertEquals(count, 8);
     }
 
     @Koan
@@ -153,16 +165,27 @@ public class AboutLoops {
         int count = 0;
         outerLabel:
         for (int i = 0; i < 4; i++) {
+            //System.out.println(getLineNumber());
             for (int j = 0; j < 4; j++) {
+                //System.out.println(getLineNumber());
                 count++;
                 if (count > 2) {
+                    //System.out.println(getLineNumber());
                     break outerLabel;
                 }
+                //System.out.println(getLineNumber());
             }
             count += 10;
+            //System.out.println(getLineNumber());
         }
+        //System.out.println(getLineNumber());
         // What does break with a label mean?
+        //   EM: I have not a clue. It might require someones fixing skills.
         // What gets executed? Where does the program flow continue?
-        assertEquals(count, __);
+        //   EM: It magically breaks two scopes down. It seems to ignore the label. This unexpected behaviour
+        //   strengthens my (humble) opinion that using labels is bad practice. Avoid it by making smaller methods and
+        //   use the 'return' statement to mark the end of your processing.
+        int andRememberWiseLessons = 3;
+        assertEquals(count, andRememberWiseLessons);
     }
 }
