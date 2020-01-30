@@ -13,7 +13,7 @@ public class AboutObjects {
 
     @Koan
     public void newObjectInstancesCanBeCreatedDirectly() {
-        assertEquals(new Object() instanceof Object, __);
+        assertEquals(new Object() instanceof Object, true);
     }
 
     @Koan
@@ -22,16 +22,17 @@ public class AboutObjects {
         }
 
         Class<?>[] ancestors = getAncestors(new Foo());
-        assertEquals(ancestors[0], __);
-        assertEquals(ancestors[1], __);
+        assertEquals(ancestors[0], Foo.class);
+        assertEquals(ancestors[1], Object.class);
     }
 
     @Koan
     public void objectToString() {
         Object object = new Object();
         // TODO: Why is it best practice to ALWAYS override toString?
+        //   EM: To let it make sense. In general gives insight while debugging.
         String expectedToString = MessageFormat.format("{0}@{1}", Object.class.getName(), Integer.toHexString(object.hashCode()));
-        assertEquals(expectedToString, __); // hint: object.toString()
+        assertEquals(expectedToString, object.toString()); // hint: object.toString()
     }
 
     @Koan
