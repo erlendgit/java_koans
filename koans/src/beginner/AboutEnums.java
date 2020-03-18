@@ -10,21 +10,23 @@ public class AboutEnums {
 
     enum Colors {
         Red, Blue, Green, Yellow // what happens if you add a ; here?
+        // Answer: it closes the list of options; but it is not required.
         // What happens if you type Red() instead?
+        // Answer: Nothing in particular.
     }
 
     @Koan
     public void basicEnums() {
         Colors blue = Colors.Blue;
-        assertEquals(blue == Colors.Blue, __);
-        assertEquals(blue == Colors.Red, __);
-        assertEquals(blue instanceof Colors, __);
+        assertEquals(blue == Colors.Blue, true);
+        assertEquals(blue == Colors.Red, false);
+        assertEquals(blue instanceof Colors, true);
     }
 
     @Koan
     public void basicEnumsAccess() {
         Colors[] colorArray = Colors.values();
-        assertEquals(colorArray[2], __);
+        assertEquals(colorArray[2], Colors.Green);
     }
 
     enum SkatSuits {
@@ -40,9 +42,12 @@ public class AboutEnums {
     @Koan
     public void enumsWithAttributes() {
         // value is private but we still can access it. Why?
+        //   Answer: Class and enum seem to share scope.
         // Try moving the enum outside the AboutEnum class... What do you expect?
+        //   Errors.
         // What happens?
-        assertEquals(SkatSuits.Clubs.value > SkatSuits.Spades.value, __);
+        //   Errors.
+        assertEquals(SkatSuits.Clubs.value > SkatSuits.Spades.value, true);
     }
 
     enum OpticalMedia {
@@ -61,7 +66,7 @@ public class AboutEnums {
 
     @Koan
     public void enumsWithMethods() {
-        assertEquals(OpticalMedia.CD.getCoolnessFactor(), __);
-        assertEquals(OpticalMedia.BluRay.getCoolnessFactor(), __);
+        assertEquals(OpticalMedia.CD.getCoolnessFactor(), -3500);
+        assertEquals(OpticalMedia.BluRay.getCoolnessFactor(), 490000);
     }
 }
